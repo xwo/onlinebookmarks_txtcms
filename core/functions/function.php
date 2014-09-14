@@ -76,7 +76,8 @@ function get_list_url($id,$page=''){
 		$url=str_replace(array('{page}','{id}'),array($page,$id),$rules);
 		$url=__ROOT__.'/'.$url.'.'.config('URL_PATH_SUFFIX');
 	}else{
-		$url=url('Article/lists?id='.$id.'&p=!page!');
+		$page= $page ? '&p='.$page : '';
+		$url=url('Article/lists?id='.$id.$page);
 	}
 	return $url;
 }
