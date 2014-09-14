@@ -65,7 +65,7 @@ function get_show_url($id,$page=''){
 		$url=str_replace(array('{page}','{id}'),array($page,$id),$rules);
 		$url=__ROOT__.'/'.$url.'.'.config('URL_PATH_SUFFIX');
 	}else{
-		$url=url('Article/show?id='.$id.'&p=!page!');
+		$url=url('Article/show?id='.$id);
 	}
 	return $url;
 }
