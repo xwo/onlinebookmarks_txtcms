@@ -18,7 +18,7 @@ class View {
 		$this->options['caching']=config('HTML_CACHE');
 		$this->options['tpl_path']=config('TMPL_PATH') ? config('TMPL_PATH') : TMPL_PATH;
 		$this->options['template_dir']=$this->options['tpl_path'].$this->group.$theme;
-		$this->options['cache_dir']=CACHE_PATH.'html/'.$this->group.$theme;
+		$this->options['cache_dir']=CACHE_PATH.'Html/'.$this->group.$theme;
 		$this->options['compile_dir']=TPLCACHE_PATH.$this->group.$theme;
 		$this->options['cache_id']=md5($_SERVER['QUERY_STRING']); //缓存ID
 		$this->options['cache_html_user_hashdir']=config('HTML_CACHE_USE_HASHDIR'); //是否开启缓存子目录
