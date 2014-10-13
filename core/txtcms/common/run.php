@@ -40,19 +40,19 @@ if(!IS_CLI) {
 }
 //定义路径常量
 defined('APP_DEBUG') or define('APP_DEBUG',false);
-defined('LIB_PATH') or define('LIB_PATH',TXTCMS_PATH.'libs/');
-defined('TEMPLATE_PATH') or define('TEMPLATE_PATH',LIB_PATH.'template/');
-defined('APPLIB_PATH') or define('APPLIB_PATH',APP_PATH.'core/');
-defined('FUNCTION_PATH') or define('FUNCTION_PATH',APPLIB_PATH.'functions/');
-defined('CONFIG_PATH') or define('CONFIG_PATH',APPLIB_PATH.'configs/');
-defined('TMPL_PATH') or define('TMPL_PATH',APP_PATH.'template/');
-defined('TEMP_PATH') or define('TEMP_PATH',APP_PATH.'temp/');
-defined('LOG_PATH') or define('LOG_PATH',TEMP_PATH.'logs/');
-defined('CACHE_PATH') or define('CACHE_PATH',TEMP_PATH.'cache/');
-defined('DATA_PATH') or define('DATA_PATH',TEMP_PATH.'data/');
-defined('DB_PATH') or define('DB_PATH',TEMP_PATH.'db/');
-defined('SESSION_PATH') or define('SESSION_PATH',TEMP_PATH.'session/');
-defined('TPLCACHE_PATH') or define('TPLCACHE_PATH',CACHE_PATH.'tplcache/');
+defined('LIB_PATH') or define('LIB_PATH',TXTCMS_PATH.'Libs/');
+defined('TEMPLATE_PATH') or define('TEMPLATE_PATH',LIB_PATH.'Template/');
+defined('APPLIB_PATH') or define('APPLIB_PATH',APP_PATH.'Core/');
+defined('FUNCTION_PATH') or define('FUNCTION_PATH',APPLIB_PATH.'Functions/');
+defined('CONFIG_PATH') or define('CONFIG_PATH',APPLIB_PATH.'Configs/');
+defined('TMPL_PATH') or define('TMPL_PATH',APP_PATH.'Template/');
+defined('TEMP_PATH') or define('TEMP_PATH',APP_PATH.'Temp/');
+defined('LOG_PATH') or define('LOG_PATH',TEMP_PATH.'Logs/');
+defined('CACHE_PATH') or define('CACHE_PATH',TEMP_PATH.'Cache/');
+defined('DATA_PATH') or define('DATA_PATH',TEMP_PATH.'Data/');
+defined('DB_PATH') or define('DB_PATH',TEMP_PATH.'Db/');
+defined('SESSION_PATH') or define('SESSION_PATH',TEMP_PATH.'Session/');
+defined('TPLCACHE_PATH') or define('TPLCACHE_PATH',CACHE_PATH.'Tplcache/');
 
 //设置session路径
 session_save_path(SESSION_PATH);
@@ -75,9 +75,9 @@ else if(isset($_SERVER['HTTP_X_REWRITE_URL'])) {
 	$_SERVER['REQUEST_URI'] = $_SERVER['HTTP_X_REWRITE_URL'];
 }
 //加载系统函数库
-require TXTCMS_PATH.'common/function.php';
+require TXTCMS_PATH.'Common/function.php';
 
-config(include TXTCMS_PATH.'configs/config.php');
+config(include TXTCMS_PATH.'Configs/config.php');
 //设置时区
 function_exists('date_default_timezone_set') && date_default_timezone_set (config('DEFAULT_TIMEZONE'));
 //创建目录
@@ -95,7 +95,7 @@ if(!is_dir(APPLIB_PATH) && is_writeable(APP_PATH)) {
 $list=array(
 	LIB_PATH.'Sys.class.php',
 	LIB_PATH.'Route.class.php',
-	LIB_PATH.'db/db.class.php',
+	LIB_PATH.'Db/db.class.php',
 	LIB_PATH.'Db.class.php',
 	TEMPLATE_PATH.'smarty/Smarty.class.php',
 	LIB_PATH.'Action.class.php',

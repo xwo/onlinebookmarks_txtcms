@@ -7,4 +7,4 @@ defined('APP_PATH')	 or define('APP_PATH', dirname($_SERVER['SCRIPT_FILENAME']).
 //系统开始运行时间
 define('_START_TIME', microtime());
 //加载系统配置
-require TXTCMS_PATH.'common/run.php';
+require TXTCMS_PATH.'Common/run.php';
