@@ -105,7 +105,7 @@ function dump($str,$isexit=false){
 }
 //连接数据库
 function DB($name=''){
-	return new Db(TEMP_PATH,'db',$name);
+	return new Db(TEMP_PATH,'Db',$name);
 }
 //导入类库
 function import($class,$ext='.class.php'){

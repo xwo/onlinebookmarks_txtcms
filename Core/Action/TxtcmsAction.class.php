@@ -3,7 +3,7 @@ class TxtcmsAction extends Action{
 	public function _init(){
 		config('cms_name','TXTCMS');
 		config('web_path',_APP_);
-		config('tpl_path',_APP_.'template');
+		config('tpl_path',_APP_.'Template');
 		if(!config('web_debug')){
 			error_reporting(0);
 		}else{

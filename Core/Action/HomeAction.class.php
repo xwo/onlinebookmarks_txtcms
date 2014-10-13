@@ -5,7 +5,7 @@ class HomeAction extends TxtcmsAction{
 		if(config('web_close')){
 			$this->error(config('web_closecon'));
 		}
-		import('class/robot');
+		import('Class/robot');
 		$robot=new robot;
 		if($robot->check()){
 			$data['is_robot']=true;
@@ -22,7 +22,7 @@ class HomeAction extends TxtcmsAction{
 			$data['myad'][$mark]=$adlist[$k]['code'];
 		}
 		$data['web_path']=__ROOT__;
-		$data['theme_path']=__ROOT__.'/template/'.config('web_default_theme');
+		$data['theme_path']=__ROOT__.'/Template/'.config('web_default_theme');
 		$this->tplConf('template_dir',TMPL_PATH.config('web_default_theme'));
 		$this->assign($data);
 	}
