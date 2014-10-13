@@ -51,7 +51,7 @@ class CacheAction extends AdminAction {
 			}elseif($file=='compile'){
 				$file=TPLCACHE_PATH;
 			}elseif($file=='html'){
-				$file=CACHE_PATH.'html';
+				$file=CACHE_PATH.'Html';
 			}elseif($file=='session'){
 				$file=SESSION_PATH;
 			}
