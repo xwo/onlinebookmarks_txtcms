@@ -39,7 +39,7 @@ class Sys {
 		$urlMode=config('URL_MODEL');
 		if($urlMode ==2){
             // 兼容模式判断
-            define('PHP_FILE',_PHP_FILE_.'?');
+            define('PHP_FILE',_PHP_FILE_);
         }elseif($urlMode ==3) {
             //当前项目地址
             $url    =   dirname(_PHP_FILE_);
@@ -101,14 +101,12 @@ class Sys {
 		}
 		define('MODULE_NAME',self::getModule(config('MODULE_VAR')));
 		define('ACTION_NAME',self::getAction(config('ACTION_VAR')));
-
 		$_REQUEST = array_merge($_POST,$_GET);
 		
 		if(!preg_match('/^[A-Za-z](\w)*$/',MODULE_NAME)){
 			throw_exception('未找到模块:'.MODULE_NAME);
 		}
 		$group=defined('GROUP_NAME') ? GROUP_NAME.'/' : '';
-
 		$module=action($group.MODULE_NAME);
 		$action=ACTION_NAME;
 		if(!$module) {
