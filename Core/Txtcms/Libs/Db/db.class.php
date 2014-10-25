@@ -85,11 +85,6 @@ abstract class txtSQL {
 		if (!is_dir($this -> _LIBPATH)) {
 			$this -> _error(E_USER_ERROR, '数据库路径不存在');
 		} 
-		/**
-		 * Instantiate parser and core class
-		 */
-		$this -> _query = new txtSQLCore;
-		$this -> _query -> _LIBPATH = $this -> _LIBPATH;
 		return true;
 	} 
 
@@ -120,7 +115,7 @@ abstract class txtSQL {
 		$this -> _validate($arguments);
 		$this -> _QUERYCOUNT++;
 
-		return $this -> _query -> select($arguments);
+		return $this -> _select($arguments);
 	} 
 
 	/**
@@ -138,7 +133,7 @@ abstract class txtSQL {
 		$this -> _validate($arguments);
 		$this -> _QUERYCOUNT++;
 
-		return $this -> _query -> insert($arguments);
+		return $this ->_insert($arguments);
 	} 
 
 	/**
@@ -157,7 +152,7 @@ abstract class txtSQL {
 		$this -> _validate($arguments);
 		$this -> _QUERYCOUNT++;
 
-		return $this -> _query -> update($arguments);
+		return $this -> _update($arguments);
 	} 
 
 	/**
@@ -175,7 +170,7 @@ abstract class txtSQL {
 		$this -> _validate($arguments);
 		$this -> _QUERYCOUNT++;
 
-		return $this -> _query -> delete($arguments);
+		return $this -> _delete($arguments);
 	} 
 
 	/**
@@ -191,7 +186,7 @@ abstract class txtSQL {
 		$this -> _validate(array());
 		$this -> _QUERYCOUNT++;
 
-		return $this -> _query -> showdatabases();
+		return $this -> _showdatabases();
 	} 
 
 	/**
@@ -209,7 +204,7 @@ abstract class txtSQL {
 		$this -> _validate($arguments);
 		$this -> _QUERYCOUNT++;
 
-		return $this -> _query -> createdatabase($arguments);
+		return $this -> _createdatabase($arguments);
 	} 
 
 	/**
@@ -227,7 +222,7 @@ abstract class txtSQL {
 		$this -> _validate($arguments);
 		$this -> _QUERYCOUNT++;
 
-		return $this -> _query -> dropdatabase($arguments);
+		return $this -> _dropdatabase($arguments);
 	} 
 
 	/**
@@ -244,7 +239,7 @@ abstract class txtSQL {
 		$this -> _validate($arguments);
 		$this -> _QUERYCOUNT++;
 
-		return $this -> _query -> renamedatabase($arguments);
+		return $this -> _renamedatabase($arguments);
 	} 
 
 	/**
@@ -262,7 +257,7 @@ abstract class txtSQL {
 		$this -> _validate($arguments);
 		$this -> _QUERYCOUNT++;
 
-		return $this -> _query -> showtables($arguments);
+		return $this -> _showtables($arguments);
 	} 
 
 	function getFields($table, $name = '') {
@@ -286,7 +281,7 @@ abstract class txtSQL {
 		$this -> _validate($arguments);
 		$this -> _QUERYCOUNT++;
 
-		return $this -> _query -> createtable($arguments);
+		return $this -> _createtable($arguments);
 	} 
 
 	/**
@@ -304,7 +299,7 @@ abstract class txtSQL {
 		$this -> _validate($arguments);
 		$this -> _QUERYCOUNT++;
 
-		return $this -> _query -> droptable($arguments);
+		return $this -> _droptable($arguments);
 	} 
 
 	/**
@@ -323,7 +318,7 @@ abstract class txtSQL {
 		$this -> _validate($arguments);
 		$this -> _QUERYCOUNT++;
 
-		return $this -> _query -> altertable($arguments);
+		return $this -> _altertable($arguments);
 	} 
 
 	/**
@@ -341,7 +336,7 @@ abstract class txtSQL {
 		$this -> _validate($arguments);
 		$this -> _QUERYCOUNT++;
 
-		return $this -> _query -> describe($arguments);
+		return $this -> _describe($arguments);
 	} 
 
 	/**
@@ -413,51 +408,51 @@ abstract class txtSQL {
 			 * ----- Database Related -----
 			 */
 			case 'show databases':
-				$results = $this -> _query -> showdatabases();
+				$results = $this -> _showdatabases();
 				break;
 			case 'create database':
-				$results = $this -> _query -> createdatabase($arguments);
+				$results = $this -> _createdatabase($arguments);
 				break;
 			case 'drop database':
-				$results = $this -> _query -> dropdatabase($arguments);
+				$results = $this -> _dropdatabase($arguments);
 				break;
 			case 'rename database':
-				$results = $this -> _query -> renamedatabase($arguments);
+				$results = $this -> _renamedatabase($arguments);
 				break;
 
 			/**
 			 * ----- Table Related -----
 			 */
 			case 'show tables':
-				$results = $this -> _query -> showtables($arguments);
+				$results = $this -> _showtables($arguments);
 				break;
 			case 'create table':
-				$results = $this -> _query -> createtable($arguments);
+				$results = $this -> _createtable($arguments);
 				break;
 			case 'drop table':
-				$results = $this -> _query -> droptable($arguments);
+				$results = $this -> _droptable($arguments);
 				break;
 			case 'alter table':
-				$results = $this -> _query -> altertable($arguments);
+				$results = $this -> _altertable($arguments);
 				break;
 			case 'describe':
-				$results = $this -> _query -> describe($arguments);
+				$results = $this -> _describe($arguments);
 				break;
 
 			/**
 			 * ----- Main functions -----
 			 */
 			case 'select':
-				$results = $this -> _query -> select($arguments);
+				$results = $this -> _select($arguments);
 				break;
 			case 'insert':
-				$results = $this -> _query -> insert($arguments);
+				$results = $this -> _insert($arguments);
 				break;
 			case 'update':
-				$results = $this -> _query -> update($arguments);
+				$results = $this -> _update($arguments);
 				break;
 			case 'delete':
-				$results = $this -> _query -> delete($arguments);
+				$results = $this -> _delete($arguments);
 				break;
 
 			default:
@@ -484,7 +479,7 @@ abstract class txtSQL {
 		$this -> _STRICT = $strict;
 
 		if ($this -> _isconnected()) {
-			$this -> _query -> strict($strict);
+			$this -> _strict($strict);
 		} 
 		return true;
 	} 
@@ -713,7 +708,6 @@ abstract class txtSQL {
 		 * Select the database
 		 */
 		$this -> _SELECTEDDB = $db;
-		$this -> _query -> _SELECTEDDB = $db;
 		return true;
 	} 
 
@@ -881,9 +875,7 @@ abstract class txtSQL {
 	 * @access public 
 	 */
 	function last_error() {
-		if (!empty($this -> _query -> _ERRORS)) {
-			print '<pre>' . $this -> _query -> _ERRORSPLAIN[count($this -> _query -> _ERRORS)-1] . '</pre>';
-		} elseif (!empty($this -> _ERRORS)) {
+		if (!empty($this -> _ERRORS)) {
 			print '<pre>' . $this -> _ERRORSPLAIN[count($this -> _ERRORS)-1] . '</pre>';
 		} 
 	} 
@@ -895,9 +887,7 @@ abstract class txtSQL {
 	 * @access public 
 	 */
 	function get_last_error() {
-		if (!empty($this -> _query -> _ERRORS)) {
-			return $this -> _query -> _ERRORSPLAIN[count($this -> _query -> _ERRORS)-1];
-		} elseif (!empty($this -> _ERRORS)) {
+		if (!empty($this -> _ERRORS)) {
 			return $this -> _ERRORSPLAIN[count($this -> _ERRORS)-1];
 		} 
 	} 
@@ -912,7 +902,7 @@ abstract class txtSQL {
 		/**
 		 * No errors?
 		 */
-		if (empty($this -> _ERRORS) && empty($this -> _query -> _ERRORS)) {
+		if (empty($this -> _ERRORS)) {
 			echo 'No errors occurred during script execution';
 			return true;
 		} 
@@ -924,16 +914,7 @@ abstract class txtSQL {
 			foreach ($this -> _ERRORS as $key => $value) {
 				echo 'ERROR #[' . $key . '] ' . $value;
 			} 
-		} 
-
-		/**
-		 * Errors during query execution portion
-		 */
-		elseif (!empty($this -> _query -> _ERRORS)) {
-			foreach ($this -> _query -> _ERRORS as $key => $value) {
-				echo 'ERROR #[' . $key . '] ' . $value;
-			} 
-		} 
+		}
 
 		return true;
 	} 
@@ -1530,8 +1511,6 @@ abstract class txtSQL {
 	function version() {
 		return '2.2 super';
 	} 
-} 
-class txtSQLCore extends txtSQL {
 	/**
 	 * To extract data from a database, given that the row fits the given credentials
 	 * 
@@ -1539,7 +1518,7 @@ class txtSQLCore extends txtSQL {
 	 * @return mixed selected An array containing the rows that matched the where clause
 	 * @access private 
 	 */
-	function select ($arg) {
+	function _select($arg) {
 		/**
 		 * If the user specified a different database, we must
 		 * then automatically select it for them
@@ -1599,7 +1578,7 @@ class txtSQLCore extends txtSQL {
 		/**
 		 * Save changes in the cache
 		 */
-		// $this->_CACHE[$filename.'.MYD'] = $rows;
+		$this->_CACHE[$filename.'.MYD'] = $rows;
 		$this -> _CACHE["$this->_LIBPATH/$this->_SELECTEDDB/{$table_frm}.FRM"] = $cols;
 		/**
 		 * Check to see if we have a where clause to work with
@@ -1665,14 +1644,12 @@ class txtSQLCore extends txtSQL {
 			$temp[$value] = $colPos;
 		} 
 		$arg['select'] = $temp;
-
 		/**
 		 * Initialize Some Variables
 		 */
 		$found = -1;
 		$added = -1;
 		$selected = array();
-
 		/**
 		 * Go through each record, if the row matches and we are in our limits
 		 * then select the row with the proper type (string, boolean, or integer)
@@ -1749,7 +1726,7 @@ class txtSQLCore extends txtSQL {
 	 * @return void 
 	 * @access private 
 	 */
-	function insert ($arg) {
+	function _insert ($arg) {
 		/**
 		 * If the user specifies a different database, then
 		 * automatically select it for them
@@ -1919,7 +1896,7 @@ class txtSQLCore extends txtSQL {
 	 * @return int deleted The number of rows deleted
 	 * @access private 
 	 */
-	function delete ($arg) {
+	function _delete ($arg) {
 		/**
 		 * If the user specifies a different database, then
 		 * automatically select it for them
@@ -2035,7 +2012,7 @@ class txtSQLCore extends txtSQL {
 	 * @return int updated The number of rows that were updated
 	 * @access private 
 	 */
-	function update ($arg) {
+	function _update ($arg) {
 		/**
 		 * If the user specifies a different database
 		 * then we must automatically select it for them.
@@ -2238,7 +2215,7 @@ class txtSQLCore extends txtSQL {
 	 * @return mixed tables An array containing the tables inside of a db
 	 * @access private 
 	 */
-	function showtables ($arg = null) {
+	function _showtables ($arg = null) {
 		/**
 		 * Are we showing tables inside of another database?
 		 */
@@ -2305,7 +2282,7 @@ class txtSQLCore extends txtSQL {
 	 * @return void 
 	 * @access private 
 	 */
-	function createtable ($arg = null) {
+	function _createtable ($arg = null) {
 		/**
 		 * Inside another database?
 		 */
@@ -2545,7 +2522,7 @@ class txtSQLCore extends txtSQL {
 	 * @return void 
 	 * @access private 
 	 */
-	function droptable ($arg = null) {
+	function _droptable ($arg = null) {
 		/**
 		 * Make sure that we have a name, and that it's valid
 		 */
@@ -2599,7 +2576,7 @@ class txtSQLCore extends txtSQL {
 	 * @return void 
 	 * @access private 
 	 */
-	function altertable ($arg = null) {
+	function _altertable ($arg = null) {
 		/**
 		 * Is inside another database?
 		 */
@@ -3375,7 +3352,7 @@ class txtSQLCore extends txtSQL {
 	 * @return mixed cols An array populated with details on the fields in a table
 	 * @access private 
 	 */
-	function describe ($arg = null) {
+	function _describe ($arg = null) {
 		/**
 		 * Inside of another database?
 		 */
@@ -3425,7 +3402,7 @@ class txtSQLCore extends txtSQL {
 	 * @return mixed db An array populated with the list of databases in the CWD
 	 * @access private 
 	 */
-	function showdatabases () {
+	function _showdatabases () {
 		/**
 		 * Can we open the directory up?
 		 */
@@ -3453,7 +3430,7 @@ class txtSQLCore extends txtSQL {
 	 * @return void 
 	 * @access private 
 	 */
-	function createdatabase ($arg = null) {
+	function _createdatabase ($arg = null) {
 		/**
 		 * Make sure that we have a name, and that it's valid
 		 */
@@ -3487,7 +3464,7 @@ class txtSQLCore extends txtSQL {
 	 * @return void 
 	 * @access private 
 	 */
-	function dropdatabase ($arg = null) {
+	function _dropdatabase ($arg = null) {
 		/**
 		 * Do we have a valid name?
 		 */
@@ -3545,7 +3522,7 @@ class txtSQLCore extends txtSQL {
 	 * @return void 
 	 * @access private 
 	 */
-	function renamedatabase ($arg = null) {
+	function _renamedatabase ($arg = null) {
 		/**
 		 * Valid database names?
 		 */

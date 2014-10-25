@@ -30,11 +30,7 @@ if(!IS_CLI) {
     }
     if(!defined('__ROOT__')) {
         // 网站URL根目录
-        if( strtoupper(APP_NAME) == strtoupper(basename(dirname(_PHP_FILE_))) ) {
-            $_root = dirname(dirname(_PHP_FILE_));
-        }else {
-            $_root = dirname(_PHP_FILE_);
-        }
+        $_root = dirname(_PHP_FILE_);
         define('__ROOT__',   (($_root=='/' || $_root=='\\')?'':$_root));
     }
 }
