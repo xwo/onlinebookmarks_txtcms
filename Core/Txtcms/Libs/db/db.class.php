@@ -1000,14 +1000,12 @@ abstract class txtSQL {
 					return $this -> _CACHE[$filename];
 				} 
 			} 
-
 			if (($contents = @file_get_contents($filename)) !== false) {
 				if ($unserialize === true) {
 					if (($contents = @unserialize($contents)) === false) {
 						return false;
 					} 
 				} 
-
 				if ($useCache === true) {
 					$this -> _CACHE[$filename] = $contents;
 				} 
@@ -1344,7 +1342,7 @@ abstract class txtSQL {
 		$arr=explode(',',$str);
 		foreach($arr as $k=>$vo){
 			$vo=trim($vo);
-			if($vo==$instr) return true;
+			if($vo==trim($instr)) return true;
 		}
 		return false;
 	}
@@ -1654,11 +1652,15 @@ abstract class txtSQL {
 		 * Go through each record, if the row matches and we are in our limits
 		 * then select the row with the proper type (string, boolean, or integer)
 		 */
-		$function = 'foreach ( $rows as $key => $value ){if ( ' . $matches . ' ){$added++;';
-		foreach ($arg['select'] as $key => $value) {
-			$function .= "\$selected[\$added]['$key'] = \$value[$value];";
+		$function = 'foreach ( $rows as $key => $value ){';
+		if($matches!='TRUE'){
+			$function.='if(('.$matches.')===false){ continue; }';
+		}
+		$function .='$added++;';
+		foreach ($arg['select'] as $key => $select_value) {
+			$function .= "\$selected[\$added]['$key'] = \$value[$select_value];";
 		} 
-		$function .= '}}';
+		$function .= '}';
 		eval($function);
 		/**
 		 * Sort the results by a key, this is a very expensive

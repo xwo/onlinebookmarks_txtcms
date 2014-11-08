@@ -1,6 +1,6 @@
 <?php
 /**
- * TXTCMS ÍøÕ¾ÅäÖÃÄ£¿é
+ * TXTCMS ç½‘ç«™é…ç½®æ¨¡å—
  * @copyright			(C) 2013-2014 TXTCMS
  * @license			http://www.txtcms.com
  * @lastmodify			2014-8-28
@@ -11,7 +11,7 @@ class ConfigAction extends AdminAction {
 		parent::_init();
 		$this->confile=TEMP_PATH.'config.php';
 	}
-	//ÏÔÊ¾Ä£°å
+	//æ˜¾ç¤ºæ¨¡æ¿
 	public function index(){
 		$theme_list=array();
 		$tplpath=TMPL_PATH;
@@ -24,7 +24,7 @@ class ConfigAction extends AdminAction {
 		$this->assign('themelist',$theme_list);
 		$this->display();
 	}
-	//¸üĞÂÅäÖÃ
+	//æ›´æ–°é…ç½®
 	public function update(){
 		$config = $_POST["con"];
 		foreach( $config as $k=> $v ){
@@ -32,14 +32,14 @@ class ConfigAction extends AdminAction {
 			$config[$k]=get_magic($config[$k]);
 		}
 		$ajax=array();
-		if(!preg_match("#http://[^/]+/$#",$config['web_url'])){
+		if(!preg_match("#http://(.+)/$#",$config['web_url'])){
 			$ajax['status']=0;
-			$ajax['info']='ÍøÕ¾µØÖ·¸ñÊ½²»ÕıÈ·';
+			$ajax['info']='ç½‘ç«™åœ°å€æ ¼å¼ä¸æ­£ç¡®';
 			$this->ajaxReturn($ajax);
 		}else{
 			$ajax['status']=1;
 		}
-		//Ìæ»»Â·ÓÉ
+		//æ›¿æ¢è·¯ç”±
 		$config['web_url_route']=array();
 		$config['web_url_route']['list']=str_replace(array('{id}','{page}','/'),array('(\\d+)','(\\d+)','\\/'),$config['web_url_route_list']);
 		$config['web_url_route']['list_p']=str_replace(array('{id}','{page}','/'),array('(\\d+)','(\\d+)','\\/'),$config['web_url_route_list_p']);

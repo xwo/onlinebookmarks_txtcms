@@ -53,7 +53,7 @@ class View {
      * @param mixed $value
      */
     public function get($name=''){
-		$this->template->getTemplateVars($name);
+		return $this->template->getTemplateVars($name);
     }
 	//获取当前操作模板
 	public function getTemplate(){
