@@ -9,7 +9,7 @@ abstract class Action {
 	protected $view=null;
 	private $name     =  '';
 	protected $config   =   array();
-	protected $template;
+	private $template;
 	/**
      * 架构函数 取得模板对象实例
      * @access public
@@ -66,20 +66,6 @@ abstract class Action {
     }
 	public function __set($name,$value) {
         $this->assign($name,$value);
-    }
-	/**
-     * 取得模板显示变量的值
-     * @access protected
-     */
-	public function get($name='') {
-        return $this->view->get($name);      
-    }
-
-    public function __get($name) {
-        return $this->get($name);
-    }
-	public function __isset($name) {
-        return $this->get($name);
     }
 	protected function error($message='',$jumpUrl='',$ajax=false) {
         $this->dispatchJump($message,0,$jumpUrl,$ajax);
@@ -203,12 +189,12 @@ abstract class Action {
             $this->ajaxReturn($data);
         }
         if(is_int($ajax)){
-			$waitSecond=$ajax;
+			$this->waitSecond=$ajax;
 			$this->assign('waitSecond',$ajax);
 		}
         if(!empty($jumpUrl)) $this->assign('jumpUrl',$jumpUrl);
         // 提示标题
-        if($this->view->get('msgTitle')===null) $this->assign('msgTitle',$status? '操作成功！' : '操作失败！');
+        if(!isset($this->msgTitle)) $this->assign('msgTitle',$status? '操作成功！' : '操作失败！');
         $this->assign('status',$status);   // 状态
 		
         if($status) { //发送成功信息
@@ -216,14 +202,14 @@ abstract class Action {
             // 成功操作后默认停留1秒
             if(!isset($this->waitSecond)) $this->assign('waitSecond','1');
             // 默认操作成功自动返回操作前页面
-            if(!isset($this->jumpUrl)) $this->assign("jumpUrl",$_SERVER["HTTP_REFERER"]);
+            if(!isset($jumpUrl)) $this->assign("jumpUrl",$_SERVER["HTTP_REFERER"]);
             $this->display(config('TMPL_ACTION_SUCCESS'));
         }else{
             $this->assign('error',$message);// 提示信息
             //发生错误时候默认停留3秒
-            if(!isset($this->waitSecond))$this->assign('waitSecond','3');
+            if(!isset($this->waitSecond))    $this->assign('waitSecond','3');
             // 默认发生错误的话自动返回上页
-            if(!isset($this->jumpUrl)) $this->assign('jumpUrl',"javascript:history.back(-1);");
+            if(!isset($jumpUrl)) $this->assign('jumpUrl',"javascript:history.back(-1);");
             $this->display(config('TMPL_ACTION_ERROR'));
             // 中止执行  避免出错后继续执行
             exit ;

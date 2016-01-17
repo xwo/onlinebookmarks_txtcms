@@ -1,0 +1,12 @@
+a:1:{i:0;a:2:{i:0;i:18;i:1;s:1503:"<p>
+	All you need to make it work is a Web server (I do it with <a href="http://www.apache.org/"><span>Apache</span></a>) with <a href="http://www.php.net/"><span>PHP</span></a> (Version 4.3.0 or later) and a <a href="http://www.mysql.com/"><span>MySQL</span></a> server (at least Version 4.1).
+</p>
+<p>
+	Since some variables are stored in sessions, you must have cookies (or at least session cookies) enabled in your browser, otherwise Online-Bookmarks will not work. The "remember me" function also stores information in a cookie, so it is a good idea to enable cookies anyway. There is quite some JavaScript code in Online-Bookmarks, such as the menu, the Sidebar tree and parts of the tree selection. Therefore, to apply with Online-Bookmarks you need to use a browser with JavaScript enabled.
+</p>
+<p>
+	If you would like to benefit from the nice little feature that downloads Favicons, you must have <a href="http://www.imagemagick.com/"><span>ImageMagick</span></a> installed on your server. It does not matter whether you have installed ImageMagick from source or you use the binary distribution, both versions are working fine. You can find the binary release <a href="ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/"><span>here</span></a> and the source code <a href="ftp://ftp.imagemagick.org/pub/ImageMagick/ImageMagick.tar.gz"><span>here</span></a>.
+</p>
+<p>
+	<a href="http://www.frech.ch/online-bookmarks/requirements.php">http://www.frech.ch/online-bookmarks/requirements.php</a> 
+</p>";}}

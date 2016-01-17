@@ -11,6 +11,6 @@ return array(
 	'TMPL_COMPILE_CHECK'=>true,
 	'HTML_CACHE'=>false,
 	'DEFAULT_THEME'=>'',
-	'cms_version'=>'x1.32',
-	'cms_release'=>'20141013',
+	'cms_version'=>'x1.31',
+	'cms_release'=>'20140909',
 );

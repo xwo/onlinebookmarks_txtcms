@@ -9,7 +9,6 @@ class Db extends txtSQL {
 	public $options;
 	public $data;
 	public function __construct($db_path='',$db_name='',$db_table){
-		parent::__construct();
 		$this->options=array();
 		$this->data=array();
 		$this->_LIBPATH=$db_path;
@@ -18,16 +17,8 @@ class Db extends txtSQL {
 		$this->table(strtolower($db_table));
 		return $this;
 	}
-	//清除配置缓存
-	private function clearOption(){
-		$this->data=array();
-		foreach($this->options as $k=>$vo){
-			if(!in_array($k,array('table','hashtable'))) $this->options[$k]=null;
-		}
-	}
 	//删除数据
 	public function delete($options=array()){
-		num('db_write_num',1);
 		if(empty($options)) {
 			$options=$this->options;
 		}else{
@@ -38,17 +29,14 @@ class Db extends txtSQL {
 			if($this->options['limit']) $options['limit']=$this->options['limit'];
 		}
 		$result=parent::delete($options);
-		$this->clearOption();
 		return $result;
 	}
 	//查询数据集
 	public function select($options=array()) {
-		num('db_query_num',1);
 		if(empty($options)) {
 			$options=$this->options;
 		}
 		$result=parent::select($options);
-		$this->clearOption();
 		return $result;
 	}
 	//查询一条数据
@@ -57,7 +45,7 @@ class Db extends txtSQL {
 			$options=$this->options;
 		}
 		$options['limit']=array(1);
-		$result=$this->select($options);
+		$result=parent::select($options);
 		if($result) return $result[0];
 		return $result;
 	}
@@ -68,17 +56,15 @@ class Db extends txtSQL {
 				'table'=>$this->options['table'],
 				'where'=>$this->options['where'],
 			);
-			$result=$this->select($options);
+			$result=parent::select($options);
 			$count=count($result);
 		}else{
 			$count=parent::table_count($this->options['table']);
 		}
-		$this->clearOption();
 		return $count;
 	}
 	//字段值增长
 	public function setInc($field,$step=1){
-		num('db_write_num',1);
 		$options=array(
 			'table'=>$this->options['table'],
 			'where'=>$this->options['where'],
@@ -87,12 +73,10 @@ class Db extends txtSQL {
 		$step+=$data[$field];
 		$options['values']=array($field=>$step);
 		$result=parent::update($options);
-		$this->clearOption();
 		return $result;
 	}
 	//字段值减少
 	public function setDec($field,$step=1){
-		num('db_write_num',1);
 		$options=array(
 			'table'=>$this->options['table'],
 			'where'=>$this->options['where'],
@@ -101,12 +85,10 @@ class Db extends txtSQL {
 		$step-=$data[$field];
 		$options['values']=array($field=>$step);
 		$result=parent::update($options);
-		$this->clearOption();
 		return $result;
 	}
 	//更新数据，返回影响条数
 	public function save($data='') {
-		num('db_write_num',1);
 		if(empty($data)) {
             if(!empty($this->data)) {
                 $data=$this->data;
@@ -123,12 +105,10 @@ class Db extends txtSQL {
 		);
 		if($this->options['limit']) $options['limit']=$this->options['limit'];
 		$result=parent::update($options);
-		$this->clearOption();
 		return $result;
 	}
 	//新增数据，返回最后ID
 	public function add($data='') {
-		num('db_write_num',1);
 		if(empty($data)) {
             if(!empty($this->data)) {
                 $data=$this->data;
@@ -146,7 +126,6 @@ class Db extends txtSQL {
 			$insertId=$this->last_insert_id($this->options['table']);
 			if($insertId) return $insertId;
 		}
-		$this->clearOption();
 		return $result;
 	}
 	//创建数据对象
@@ -235,8 +214,8 @@ class Db extends txtSQL {
 	}
 	//获取分表名并创建
 	public function getHash($key,$ismake=false){
-		if(!isset($this->options['hashtable'])) $this->options['hashtable']=$this->options['table'];
-		$table=$this->options['hashtable'];
+		if(!isset($this->options['oldtable'])) $this->options['oldtable']=$this->options['table'];
+		$table=$this->options['oldtable'];
 		$s=50;
 		$hash = sprintf("%u", crc32($key));
 		$hash1 = intval(fmod($hash, $s));

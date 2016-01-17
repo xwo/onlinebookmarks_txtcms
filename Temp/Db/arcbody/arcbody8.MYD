@@ -1,5 +1,5 @@
-a:1:{i:0;a:2:{i:0;i:4;i:1;s:855:"<p>
-	TXTCMS 是一款基于php+smarty+txt数据库开发的网站内容管理系统，遵循MVC设计模式。本程序不依赖任何数据库，采用txt文本数据库存储方式存储数据，实现跨平台。不用数据库也能实现CURD，支持分表，史上最好的无数据库cms系统
+a:1:{i:0;a:2:{i:0;i:4;i:1;s:961:"<p>
+	TXTCMS <a href="http://www.txtcms.com/" target="_blank"><span>http://www.txtcms.com/</span></a> 是一款基于php+smarty+txt数据库开发的网站内容管理系统，遵循MVC设计模式。本程序不依赖任何数据库，采用txt文本数据库存储方式存储数据，实现跨平台。不用数据库也能实现CURD，支持分表，史上最好的无数据库cms系统
 </p>
 <p>
 	<br />
@@ -45,6 +45,9 @@ a:1:{i:0;a:2:{i:0;i:4;i:1;s:855:"<p>
 </p>
 <p>
 	8.采用smarty模板引擎，模板标签化
+</p>
+<p>
+	<br />
 </p>
 <p>
 	<br />

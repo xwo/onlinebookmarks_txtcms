@@ -55,7 +55,7 @@ function smarty_function_list($params, &$smarty) {
 		$where[] = 'and';
 		$arctype_rows=DB('arctype')->order('order desc')->select();
 		$cids=array($cid);
-		import('Class/tree');
+		import('class/tree');
 		$tree=new Tree($arctype_rows);
 		$arr=$tree->leaf($cid);
 		if($arr){

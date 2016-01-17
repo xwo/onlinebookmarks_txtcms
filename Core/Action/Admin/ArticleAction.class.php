@@ -162,7 +162,7 @@ class ArticleAction extends AdminAction {
 		if($result){
 			//清除缓存
 			if(config('web_caching')){
-				$this->tplConf('cache_dir',CACHE_PATH.'Html/'.config('DEFAULT_GROUP').'/'.config('web_default_theme').'/');
+				$this->tplConf('cache_dir',CACHE_PATH.'html/'.config('DEFAULT_GROUP').'/'.config('web_default_theme').'/');
 				$cachefile=$this->view->getHtmlPath(md5($last_id));
 				if(is_file($cachefile)) unlink($cachefile);
 			}

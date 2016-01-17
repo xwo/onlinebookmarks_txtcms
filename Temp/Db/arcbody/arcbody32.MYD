@@ -1,0 +1,155 @@
+a:4:{i:0;a:2:{i:0;i:14;i:1;s:2184:"<p>
+	<b>Bookmark any Homepage with one click</b><br />
+What is a bookmarking system without an easy possibility to add bookmarks? Almost every browser supports the so called "Personal Toolbar" where buttons with certain functions can be created. It often also is called "Personal Toolbar", "Link Bar" or "Bookmarks Toolbar".  If you open the "Settings" page in Online-Bookmarks you will find a bookmarklet link called <b>bookmark</b>. Drag this link to your browsers "Personal Toolbar" and a button with the correct settings will be created.<br />
+The code beind the button is a simple JavaScript line. You can choose between opening the bookmarklet in a <a href="http://www.frech.ch/online-bookmarks/1click_new.txt"><span>new</span></a> window or in the <a href="http://www.frech.ch/online-bookmarks/1click_same.txt"><span>same</span></a> window.
+</p>
+<p>
+	<b>Favicon downloader</b><br />
+In some cases you might want to run a script that downloads all the favicons  for the bookmarks in your database. <a href="http://www.frech.ch/online-bookmarks/getfavicons.txt"><span>Here</span></a> is one. Put it in your Online-Bookmarks directory, give it executable privileges and run it from a command line. Please note that it will be a good idea to give proper privileges. That means, that the  user your webserver runs as should not be able to run this script. Thus  it would be something like this:
+<pre># cd /path/to/your/online-bookmarks/
+# chown root:root getfavicons.php
+# chmod 700 getfavicons.php
+# ls -l getfavicons.php
+-rwx------    1 root     root          923 May 28 20:44 getfavicons.php
+</pre>
+	<p>
+		<br />
+	</p>
+	<p>
+		<b>Thumbshots preview</b><br />
+This addon shows a so called thumbshots preview of the bookmarks URL from <a href="http://www.thumbshots.org/" target="_blank"><span>ThumbShots.org</span></a>. All you have to do to activate thumbshots preview is to get the <a href="http://www.frech.ch/online-bookmarks/download/addons/thumbshots.tar.gz"><span>thumbshots tar file</span></a> and extract it to your Online-Bookmarks directory.
+	</p>
+	<p>
+		<a href="http://www.frech.ch/online-bookmarks/addons.php">http://www.frech.ch/online-bookmarks/addons.php</a>
+	</p>";}i:1;a:2:{i:0;i:17;i:1;s:4849:"<strong>New Installation:<br />
+</strong> 
+<p>
+	Basically  the Installation of Online-Bookmarks is not a big deal. There is an install script that guides you through the install steps. Just make sure you know your servers database credentials. If you will have troubles anyway, you can look for help in the <a href="http://www.frech.ch/online-bookmarks/forum/"><span>forum</span></a>, if you can't find help there and you really do not feel like testing around for hours, drop me a message with the subject "Online-Bookmarks" and I will try to help you.
+	<ol>
+		<li>
+			<b>1. <em>Download</em><em>:</em></b> First of all, <a href="http://www.frech.ch/online-bookmarks/download.php"><span>download</span></a> the latest Version of Online-Bookmarks and unpack the tarball 		in your Webserver's DocumentRoot direcotry.
+		</li>
+		<li>
+			<b>2.&nbsp;<em>Installation:</em></b> Now point your browser to the freshly created directory on your		webserver. If you did it well, the URL might look like this:
+<pre>http://www.yourserver.com/online-bookmarks/</pre>
+If the configuration file "./config/config.php" is missing - and		it most probably will if you are installing a new version		- then a page will be shown linking to the install		script. After answering all the questions in the install script,		a config section is being displayed. Copy the section and paste it		to "./config/config.php". The section looks like <a href="http://www.frech.ch/online-bookmarks/config_template.php"><span>this</span></a>. After 		creating the config file you must delete the install.php file prior		visiting Online-Bookmarks, just for security reasons.
+		</li>
+		<li>
+			<b>3. <em>Login:</em></b> Try visiting http://www.yourserver.com/online-bookmarks/		and login using the user that the install script created for you.                Its username and password is "admin". The first thing you should                do is changing the password. Then open the admin script and start                creating other users. You can find the admin script under the menu                option "Tools". This admin user and the admin script are available                from Online-Bookmarks version 0.8.7_beta.
+		</li>
+	</ol>
+<br />
+<b>Upgrade an existing Installation:</b><br />
+<br />
+If you have an already existing installation of Online-Bookmarks and you would like to upgrade, the install script will care about the needed steps. If you are wise, you will backup the working  installation before using the new one:
+	<ol>
+		<li>
+			<b>1. <em>Backup files:</em></b> I simply rename or move the old installation of Online-Bookmarks so that		the new version can take place:
+<pre># mv /path/to/online-bookmarks \
+     /path/to/online-bookmarks-backup
+</pre>
+		</li>
+		<li>
+			<b>2. <em>Backup the database:</em></b> Then I backup the database content by feeding this command to the MySQL server:
+<pre># mysqldump --user=bookmarkmgr                 \
+            --password=password_of_bookmarkmgr \
+            bookmarks                          \
+            &gt; /some/path/online-bookmarks-backup.sql
+</pre>
+		</li>
+		<li>
+			<b>3. <em>Upgrade:</em></b> Now proceed with the steps from the description above. Don't forget to		copy the favicons to the new directory:
+<pre># cp -a /path/to/online-bookmarks-backup/favicons/* \
+        /path/to/online-bookmarks/favicons/
+</pre>
+		</li>
+		<li>
+			<b>4. <em>Admin user:</em></b> If you upgraded and using at least version 0.8.7_beta now, the new		admin script will be available. However, it will only be accessible		by admin users. Thus you have to define one ore more users as admins		now. To do so login to your MySQL server and do the following		change in your database:
+<pre># mysql -p bookmarks
+Enter password:
+...
+mysql&gt; UPDATE user SET admin='1' WHERE username='some_user';
+</pre>
+		</li>
+	</ol>
+<br />
+<b>Install favicon support:</b><br />
+<br />
+Since version 0.6.4 there comes a nice feature with Online-Bookmarks that allows you to display the favicon of a webpage if one exists. To make this work do the following steps:
+	<ol>
+		<li>
+			1. Make sure <a href="http://www.imagemagick.org/"><span>ImageMagick</span></a> is installed on your server. 		This is used to convert the favicon to PNG, since some browsers cannot display ICO files.
+		</li>
+		<li>
+			2. Edit the "./config/config.php" file and set the variables $convert and $identify to where		the "convert" and "identify" executables are on your system. It might be something like "/usr/local/bin/convert"		or "/usr/bin/convert".
+		</li>
+		<li>
+			3. Make sure that the "./favicons" directory is writable, readable and executable by the user your		webserver runs as. Just chmod it to 777 and it will be.
+		</li>
+	</ol>
+	<p>
+		<a href="http://www.frech.ch/online-bookmarks/installation.php">http://www.frech.ch/online-bookmarks/installation.php</a> 
+	</p>";}i:2;a:2:{i:0;i:20;i:1;s:599:"<p>
+	That's most probably the thing you want to see right away. Feel free to create, edit, delete, move or even import bookmarks and folders, but please, do not delete too many bookmarks. By now people created quite a big collection here, thus there might be people after you who want to benefit of others creations. Thank you for that! You can logon with Username "bookmark" and Password "online" <a href="http://www.frech.ch/online-bookmarks/bookmarks/"><span>here</span></a>.
+</p>
+<p>
+	<a href="http://www.frech.ch/online-bookmarks/demo.php">http://www.frech.ch/online-bookmarks/demo.php</a>
+</p>";}i:3;a:2:{i:0;i:21;i:1;s:1453:"<p>
+	<br />
+</p>
+<table cellspacing="10" cellpadding="10">
+	<tbody>
+		<tr>
+			<td>
+				The main window...
+			</td>
+			<td>
+				<a href="/uploads/images/21/index.gif" target="_blank"><img alt="" src="/images/21/s_index.gif" border="0" /></a> 
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Editing a bookmark
+			</td>
+			<td>
+				<a href="/images/21/edit.gif" target="_blank"><img alt="" src="/images/21/s_edit.gif" border="0" /></a> 
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Moving bookmarks
+			</td>
+			<td>
+				<a href="/images/21/move.gif" target="_blank"><img alt="" src="/images/21/s_move.gif" border="0" /></a> 
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Deleting bookmarks
+			</td>
+			<td>
+				<a href="/images/21/delete.gif" target="_blank"><img alt="" src="/images/21/s_delete.gif" border="0" /></a> 
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Editing a folder
+			</td>
+			<td>
+				<a href="/images/21/edit_folder.gif" target="_blank"><img alt="" src="/images/21/s_edit_folder.gif" border="0" /></a> 
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Online-Bookmarks with the <a href="http://www.frech.ch/online-bookmarks/addons.php"><span>thumbshots preview addon</span></a> 
+			</td>
+			<td>
+				<a href="/images/21/thumbshots.gif" target="_blank"><img alt="" src="/images/21/s_thumbshots.gif" border="0" /></a> 
+			</td>
+		</tr>
+	</tbody>
+</table>
+<p>
+	<br />
+</p>
+<a href="http://www.frech.ch/online-bookmarks/screenshots.php">http://www.frech.ch/online-bookmarks/screenshots.php</a>";}}
